@@ -15,13 +15,6 @@ set_include_path(
 // Define application environment
 define('APPLICATION_ENV', 'testing');
 
-
-
-$base_path = BASE_PATH;
-$app_path = APPLICATION_PATH;
-$app_env = APPLICATION_ENV;
-$include_path = get_include_path();
-
 // Zend_Application
 require_once 'Zend/Application.php';
 
@@ -30,9 +23,8 @@ require_once 'Zend/Application.php';
  */
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace('PHPUnit_');
 $autoloader->registerNamespace('Bi_');
 
 // Create application, bootstrap, and run
-require_once 'ControllerTestCase.php';
-require_once 'Autoload.php';
+require_once '../ControllerTestCase.php';
+require_once '../Autoload.php';
