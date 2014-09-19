@@ -10,8 +10,6 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $demo = new Bi_Demo();
-        $this->view->name = $demo->getName();
 
 
     }
