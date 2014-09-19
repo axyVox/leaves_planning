@@ -1,14 +1,38 @@
 <?php
 
-class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
+class IndexControllerTest
+    extends ControllerTestCase
 {
 
     public function setUp()
     {
-        $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
         parent::setUp();
     }
 
+    public function  testIndexAction(){
+        $this->assertTrue(true);
+
+        $client = new Zend_Http_Client("http://wikipedia.org");
+        $response = $client->request();
+
+        $body =  $response->getBody();
+
+        //Make
+        //Autoload::library('DemoModel');
+        //Autoload::class('DemoModel');
+        //...
+
+        $f = new Bi_Demo();
+        $demo_name = $f->getName();
+        $this->assertEquals('Demo Name', $demo_name);
+
+//        $this->request->setMethod('POST');
+
+        /*$this->dispatch('/index');
+        $this->assertAction("index");
+        $this->assertController("index");*/
+    }
 
 }
+
 
