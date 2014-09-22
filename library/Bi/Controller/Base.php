@@ -1,5 +1,5 @@
 <?php
-class Bi_BaseController extends Zend_Controller_Action {
+class Bi_Controller_Base extends Zend_Controller_Action {
 
 
     public function init(){

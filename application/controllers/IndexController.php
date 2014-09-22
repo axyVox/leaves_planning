@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Bi_BaseController
+class IndexController extends Bi_Controller_Base
 {
 
     public function init()
