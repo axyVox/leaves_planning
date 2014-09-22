@@ -9,28 +9,24 @@ class IndexControllerTest
         parent::setUp();
     }
 
-    public function  testIndexAction(){
-        $this->assertTrue(true);
+    public function  testTestNoParamsAction(){
+        $link = BASE_LINK.'/index/test/';
+        $client = new Zend_Http_Client($link);
+        $body =  $client->request()->getBody();
 
-        $client = new Zend_Http_Client("http://wikipedia.org");
-        $response = $client->request();
+        $this->assertContains("get_is_not_set", $body);
+        $this->assertContains("post_is_not_set", $body);
+    }
 
-        $body =  $response->getBody();
+    public function  testTestWithParamsAction(){
+        $link = BASE_LINK.'/index/test/?mess=mess';
+        $client = new Zend_Http_Client($link);
+        $client->setMethod(Zend_Http_Client::POST);
+        $client->setParameterPost("post","post");
+        $body =  $client->request()->getBody();
 
-        //Make
-        //Autoload::library('DemoModel');
-        //Autoload::class('DemoModel');
-        //...
-
-        $f = new Bi_Demo();
-        $demo_name = $f->getName();
-        $this->assertEquals('Demo Name', $demo_name);
-
-//        $this->request->setMethod('POST');
-
-        /*$this->dispatch('/index');
-        $this->assertAction("index");
-        $this->assertController("index");*/
+        $this->assertContains("mess", $body);
+        $this->assertContains("post", $body);
     }
 
 }

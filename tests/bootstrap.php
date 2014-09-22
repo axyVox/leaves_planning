@@ -1,6 +1,7 @@
 <?php
 error_reporting( E_ALL | E_STRICT );
 
+define('BASE_LINK', 'http://broker_interface/');
 define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));
 define('APPLICATION_PATH', BASE_PATH . '/application');
 
