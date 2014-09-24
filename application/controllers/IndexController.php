@@ -1,41 +1,42 @@
 <?php
 
-class IndexController extends Bi_Controller_Base
+class IndexController extends Lp_Controller_Base
 {
 
     public function init()
     {
-        /* Initialize action controller here */
         parent::init();
     }
 
     public function indexAction()
     {
-        $this->view->translate = $this->translate;
-        $this->view->sess_lang = $this->session->lang;
-    }
+        $this->view->layout()->setLayout('offline');
+        $this->redirectByUserRole();
 
-    public function testAction()
-    {
         $request = $this->getRequest();
 
-        $this->view->post = $request->getParam('post','post_is_not_set');
-        $this->view->mess = $request->getParam('mess','get_is_not_set');
+        if($request->isPost()){
+            $username =  $request->getParam('username');
+            $password =  $request->getParam('password');
+
+            $result = $this->login($username, $password);
+            if($result->isValid()){
+                $this->redirectByUserRole();
+            }else{
+                $this->logout();
+                $this->view->message = 'Korisničko ime ili lozinka nisu ispravni';
+                return false;
+            }
+        }
     }
 
-    public function setLanguageAction(){
 
-        $lang = $this->getRequest()->getParam('lang');
-
-//        $this->view->layout()->disableLayout();
-//        $this->getHelper('viewRenderer')->setNoRender();
-
-        $this->session->lang = $lang;
-
-//        echo '<br>';
-//        echo 'session: '.$this->session->lang;
-
-        $this->redirect('/index');
+    protected function getAuthAdapter(){
+        $auth_adapter = new Zend_Auth_Adapter_DbTable(Zend_Db_Table::getDefaultAdapter());
+        $auth_adapter->setTableName('users');
+        $auth_adapter->setIdentityColumn('username');
+        $auth_adapter->setCredentialColumn('password');
+        return $auth_adapter;
     }
 
 }

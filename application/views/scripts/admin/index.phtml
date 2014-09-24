@@ -1,0 +1,78 @@
+
+<a href="user">Create request</a>
+
+
+<table class="requests-table">
+    <tbody>
+    <tr>
+        <th>ID</th>
+        <th>Leave type</th>
+        <th>User</th>
+        <th>Approve type</th>
+        <th>Date from</th>
+        <th>Date to</th>
+        <th>Warning</th>
+    </tr>
+    <?php foreach($this->all_requests as $request){?>
+        <tr>
+            <td><?php echo $request['id']; ?></td>
+            <td><?php echo $request['leave_type']; ?></td>
+            <td><?php echo $request['user']; ?></td>
+            <td><?php echo $request['approve_type']; ?>
+                <?php if($request['approve_type'] == 'pending'){?>
+                    <input type="button" class="approve" id="<?php echo $request['id']; ?>" value="approve"/>
+                    <input type="button" class="reject" id="<?php echo $request['id']; ?>" value="reject"/>
+                <?php }?>
+            </td>
+            <td><?php echo $request['from_date']; ?></td>
+            <td><?php echo $request['to_date']; ?></td>
+            <td><?php echo $request['warning']; ?></td>
+        </tr>
+    <?php }?>
+    </tbody>
+</table>
+
+<script>
+
+$(document).ready(function(){
+
+    var approve = <?php echo Zend_Registry::get('approved_request');?>;
+    var reject = <?php echo Zend_Registry::get('rejected_request');?>;;
+
+    $(".approve").click(function(){
+        var r = confirm("Approve?");
+        if (r == true) {
+            updateApprove($(this).attr("id"), approve);
+        }
+    });
+
+    $(".reject").click(function(){
+        var r = confirm("Reject?");
+        if (r == true) {
+            updateApprove($(this).attr("id"), reject);
+        }
+    });
+
+    function updateApprove(id, approve_type){
+            var url = '<?php echo $this->baseUrl("/ajax/update-request/approve_type/"); ?>'+approve_type+"/id/"+id;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function (result) {
+                    if (result != '[]') {
+                        var object = eval('('+result+')');
+                        if(object.success){
+                            location.reload();
+                        }else{
+                            alert('Pokusajte opet kasnije.');
+                        }
+                    } else {
+                        alert('Ajax error');
+                    }
+                }
+            });
+    }
+
+});
+
+</script>

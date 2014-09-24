@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<?php $baseUrl = $this->baseUrl();?>    
+	<?php include APPLICATION_PATH.'/layouts/scripts/header.phtml';?>
+
+        <div class="user">
+            Username: <?php echo $this->username; ?>
+            <br/>
+            user type: <?php echo $this->user_type; ?>
+            <br/>
+        </div>
+
+		<?php echo $this->layout()->content;?>
+        <?php include APPLICATION_PATH.'/layouts/scripts/footer.phtml';?>
+    </body>
+</html>
+
