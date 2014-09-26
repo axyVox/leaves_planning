@@ -34,22 +34,16 @@ class AdminController extends Lp_Controller_Base
             $leave_type = $leave_type_model->getNameById($request->leave_type);
             $request['leave_type'] = $leave_type;
 
-
             $approve_type = $approve_type_model->getNameById($request->approve_type);
             $request['approve_type'] = $approve_type;
 
             $user = $user_model->getUsernameById($request->user);
             $request['user'] = $user;
 
-
             $all_requests_packed[] = $request;
-
         }
 
         $this->view->all_requests = $all_requests_packed;
-
     }
-
-
 }
 

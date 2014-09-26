@@ -3,7 +3,8 @@
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 
-    protected function _initAutoLoad(){
+    protected function _initAutoLoad()
+    {
         $auto_loader = Zend_Loader_Autoloader::getInstance();
         $resource_loader = new Zend_Loader_Autoloader_Resource(
             array(
@@ -13,7 +14,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     'model' => array(
                         'path' => 'models/',
                         'namespace' => 'Model_'
-                    ),
+                    )
                 ),
             )
         );
@@ -24,7 +25,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     /**
      * init database adapter
      */
-    protected function _initDatabase ()
+    protected function _initDatabase()
     {
         // get config from config/application.ini
         $config = $this->getOptions();
@@ -41,7 +42,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     /**
      * Add jquery zend helper - It;s in test version but still good enough
      */
-    protected function _initJquery(){
+    protected function _initJquery()
+    {
         $this->bootstrap('layout');
         $layout = $this->getResource('layout');
         $view = $layout->getView();
@@ -56,21 +58,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     }
 
-    protected function _initConfigs(){
+    protected function _initConfigs()
+    {
         /**
          * Set variables from config files to zend registry
          */
         $this->bootstrap('LocalConfigs');
         $registry = $this->getResource('LocalConfigs');
-        foreach($registry as $key => $value){
+        foreach ($registry as $key => $value) {
             Zend_Registry::set($key, $value);
         }
         Zend_Registry::set('http_user_agent', $_SERVER['HTTP_USER_AGENT']);
 
     }
 
-    protected function _initLocalConfigs(){
-        $config = new Zend_Config_Ini(APPLICATION_PATH.'/configs/config.ini');
+    protected function _initLocalConfigs()
+    {
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/config.ini');
         // store it into the registry
         $registry = new Zend_Registry($config->toArray(), ArrayObject::ARRAY_AS_PROPS);
         return $registry;

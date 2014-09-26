@@ -7,18 +7,14 @@
 </head>
 
 <body>
-
-<div class="login-card">
-    <h1>Login</h1><br>
-    <span style="color: red;"><?php if(isset($this->message) && !empty($this->message)) echo $this->message; ?></span>
-    <form method="post" id="login_form">
-        <input type="text" name="username" id="username" placeholder="Username">
-        <input type="password" name="password" id="password" placeholder="Password">
-        <input type="submit" name="login" id="login" class="login login-submit" value="login">
-    </form>
-
-</div>
-
+    <div class="login-card">
+        <h1>Login</h1><br>
+        <span style="color: red;"><?php if(isset($this->message) && !empty($this->message)) echo $this->message; ?></span>
+        <form method="post" id="login_form">
+            <input type="text" name="username" id="username" placeholder="Username">
+            <input type="password" name="password" id="password" placeholder="Password">
+            <input type="submit" name="login" id="login" class="login login-submit" value="login">
+        </form>
+    </div>
 </body>
-
 </html>

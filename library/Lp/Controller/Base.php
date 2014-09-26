@@ -1,42 +1,49 @@
 <?php
-class Lp_Controller_Base extends Zend_Controller_Action {
+
+class Lp_Controller_Base extends Zend_Controller_Action
+{
 
 
-    public function init(){
+    public function init()
+    {
         parent::init();
     }
 
-    public function checkIdentity(){
-        if(Zend_Auth::getInstance()->hasIdentity()){
+    public function checkIdentity()
+    {
+        if (Zend_Auth::getInstance()->hasIdentity()) {
             $storage = Zend_Auth::getInstance()->getStorage()->read();
 
-            if($storage->user_type == 1)
+            if ($this->isAdmin())
                 $this->redirect('admin');
 
-            if($storage->user_type == 2)
+            if ($this->isUser())
                 $this->redirect('user');
 
         }
     }
 
-    public function hasIdentity(){
+    public function hasIdentity()
+    {
         return Zend_Auth::getInstance()->hasIdentity();
     }
 
-    public function isAdmin(){
-        if(Zend_Auth::getInstance()->hasIdentity()){
+    public function isAdmin()
+    {
+        if (Zend_Auth::getInstance()->hasIdentity()) {
             $storage = Zend_Auth::getInstance()->getStorage()->read();
-            if($storage->user_type == 1)
+            if (Lp_UserType::isAdmin($storage->user_type))
                 return true;
 
             return false;
         }
     }
 
-    public function isUser(){
-        if(Zend_Auth::getInstance()->hasIdentity()){
+    public function isUser()
+    {
+        if (Zend_Auth::getInstance()->hasIdentity()) {
             $storage = Zend_Auth::getInstance()->getStorage()->read();
-            if($storage->user_type == 2)
+            if (Lp_UserType::isUser($storage->user_type))
                 return true;
 
             return false;
@@ -44,18 +51,20 @@ class Lp_Controller_Base extends Zend_Controller_Action {
     }
 
 
-    public function redirectByUserRole(){
-        if($this->hasIdentity()){
-            if($this->isAdmin())
+    public function redirectByUserRole()
+    {
+        if ($this->hasIdentity()) {
+            if ($this->isAdmin())
                 $this->redirect('admin');
 
-            if($this->isUser())
+            if ($this->isUser())
                 $this->redirect('user');
         }
     }
 
-    public function getUserStorage(){
-        if(Zend_Auth::getInstance()->hasIdentity()){
+    public function getUserStorage()
+    {
+        if (Zend_Auth::getInstance()->hasIdentity()) {
             $storage = Zend_Auth::getInstance()->getStorage()->read();
             return $storage;
         }
@@ -81,7 +90,8 @@ class Lp_Controller_Base extends Zend_Controller_Action {
         return $result;
     }
 
-    public function logout(){
+    public function logout()
+    {
         Zend_Auth::getInstance()->clearIdentity();
         Zend_Session::destroy(true);
     }

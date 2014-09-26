@@ -1,9 +1,9 @@
 <?php
 
-class Model_LeaveType extends Zend_Db_Table_Abstract
+class Model_UserType extends Zend_Db_Table_Abstract
 {
 
-	protected $_name = 'leave_type';
+	protected $_name = 'user_type';
 
 	public function init(){
         parent::init();

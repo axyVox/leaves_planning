@@ -8,7 +8,11 @@ $(document).ready(function(){
     });
 
 
-    $(".datepicker").datepicker({ dateFormat: "dd-mm-yy", minDate: 0});
+    $(".datepicker").datepicker({   dateFormat: "dd-mm-yy",
+                                    minDate: 0,
+                                    beforeShowDay: $.datepicker.noWeekends,
+                                    firstDay: 1
+    });
 
     $("#leave_request_form").submit(function(){
 

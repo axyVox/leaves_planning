@@ -1,53 +1,59 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 
-<style>
+<?php
+$leave_type = '-';
+$from_date = '';
+$to_date = '';
+?>
 
-</style>
-
-
-
-<?php if($this->user_type == 1){ ?>
+<?php if ($this->user_type == 1) { ?>
     <a href="admin">All requests</a>
 <?php } ?>
 <br/>
 
 
-<?php if(isset($this->message) && !empty($this->message)) { ?>
-<div class="login-card" style="color: forestgreen;">
-        <?php  echo $this->message; ?>
-</div>
-<?php } ?>
-
-<?php if(isset($this->invalid_date) && !empty($this->invalid_date)) { ?>
-    <div class="login-card" style="color: red;">
-        <?php  echo $this->invalid_date; ?>
+<?php if (isset($this->message) && !empty($this->message)) { ?>
+    <div class="login-card" style="margin-top: 45px; color: forestgreen;">
+        <?php echo $this->message; ?>
     </div>
 <?php } ?>
 
-<div class="login-card" style=" <?php if(isset($this->hide) && !empty($this->hide)) echo $this->hide; ?>">
+<?php if (isset($this->invalid_date) && !empty($this->invalid_date)) { ?>
+    <div class="login-card" style="margin-top: 45px; color: red;">
+        <h3>Automatic reject</h3>
+        <?php echo $this->invalid_date; ?>
+    </div>
+    <?php $leave_type = $this->leave_type; ?>
+    <?php $from_date = $this->from_date; ?>
+    <?php $to_date = $this->to_date; ?>
+<?php } ?>
+
+<div class="login-card" style=" <?php if (isset($this->hide) && !empty($this->hide)) echo $this->hide; ?>">
     <h1>Create request</h1><br>
+
     <form method="post" name="leave_request_form" id="leave_request_form">
         <select name="leave_type" id="leave_type">
             <option value="-">Leave type</option>
-            <?php foreach($this->types as $type){ ?>
+            <?php foreach ($this->types as $type) { ?>
                 <option value="<?php echo $type->id; ?>"><?php echo $type->name; ?></option>
 
             <?php } ?>
         </select>
+
         <div class="inline">
-            <input type="text" class="datepicker" name="from_date" id="from_date" id="from_date" placeholder="From">
-            <input type="text" class="datepicker" name="to_date" id="to_date" placeholder="To">
+            <input type="text" class="datepicker" name="from_date" id="from_date" id="from_date"
+                   value="<?php echo $from_date; ?>" placeholder="From">
+            <input type="text" class="datepicker" name="to_date" id="to_date" value="<?php echo $to_date; ?>"
+                   placeholder="To">
         </div>
         <input type="submit" name="create" id="create" class="login login-submit" value="create">
     </form>
 
 </div>
 
-<?php
-$unix_timestamp = strtotime('26-09-2014');
-echo date('w', $unix_timestamp);
-?>
-<br/>
-<?php
-echo Zend_Registry::get('pending_request');
-?>
+<script>
+    $(document).ready(function () {
+        var leave_type = "<?php echo $leave_type; ?>";
+        $("#leave_type option[value='" + leave_type + "']").attr("selected", "selected");
+    });
+</script>

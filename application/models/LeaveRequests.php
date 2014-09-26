@@ -14,6 +14,10 @@ class Model_LeaveRequests extends Zend_Db_Table_Abstract
         return $this->fetchRow($select);
     }
 
+    public function getUserById($id) {
+        $select = $this->select()->where('id = ?', (int) $id);
+        return $this->fetchRow($select)->user;
+    }
 
 	public function getAll(){
 		$select = $this->select();
@@ -28,15 +32,32 @@ class Model_LeaveRequests extends Zend_Db_Table_Abstract
         return count($rows);
     }
 
-    public function doSave($data, $id=null){
-        if($id){
-            return $this->update($data, array('id = ?' => (int)$id));
-        }
-        else{
-            return $this->insert($data);
-        }
+    public function doInsert($data){
+        return $this->insert($data);
+
     }
 
+    public function doUpdate($data){
+        $id = $data['id'];
+        unset($data['id']);
+
+        return $this->update($data, array('id = ?' => (int)$id));
+    }
+
+    public function getRequestedWorkingDaysById($id) {
+        $select = $this->select()->where('id = ?', (int) $id);
+
+        $row= $this->fetchRow($select);
+        $lib = new Lp_Dates();
+        $working_days = $lib->countWorkingDays($row->from_date, $row->to_date);
+
+        return $working_days;
+    }
+
+    public function getLeaveTypeById($id) {
+        $select = $this->select()->where('id = ?', (int) $id);
+        return $this->fetchRow($select)->leave_type;
+    }
 
 }
 
