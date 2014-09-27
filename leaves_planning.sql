@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 26, 2014 at 08:54 PM
+-- Generation Time: Sep 27, 2014 at 10:15 AM
 -- Server version: 5.5.35-0ubuntu0.13.10.2
 -- PHP Version: 5.5.3-1ubuntu2.6
 
@@ -90,6 +90,7 @@ INSERT INTO `leave_requests` (`id`, `leave_type`, `user`, `approve_type`, `from_
 CREATE TABLE IF NOT EXISTS `leave_type` (
   `id` int(11) NOT NULL,
   `name` varchar(10) NOT NULL,
+  `desc` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -97,9 +98,9 @@ CREATE TABLE IF NOT EXISTS `leave_type` (
 -- Dumping data for table `leave_type`
 --
 
-INSERT INTO `leave_type` (`id`, `name`) VALUES
-(0, 'paid'),
-(1, 'not_paid');
+INSERT INTO `leave_type` (`id`, `name`, `desc`) VALUES
+(0, 'paid', 'Holiday'),
+(1, 'not_paid', 'Absence');
 
 -- --------------------------------------------------------
 

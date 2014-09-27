@@ -19,6 +19,11 @@ class Model_LeaveType extends Zend_Db_Table_Abstract
         return $this->fetchRow($select)->name;
     }
 
+    public function getDescById($id) {
+        $select = $this->select()->where('id = ?', (int) $id);
+        return $this->fetchRow($select)->desc;
+    }
+
     public function getIdByName($name) {
         $select = $this->select()->where('name = ?', $name);
         return $this->fetchRow($select)->id;

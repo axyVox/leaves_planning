@@ -35,7 +35,7 @@ $to_date = '';
         <select name="leave_type" id="leave_type">
             <option value="-">Leave type</option>
             <?php foreach ($this->types as $type) { ?>
-                <option value="<?php echo $type->id; ?>"><?php echo $type->name; ?></option>
+                <option value="<?php echo $type->id; ?>"><?php echo $type->desc; ?></option>
 
             <?php } ?>
         </select>
