@@ -10,6 +10,10 @@ class AjaxController extends Lp_Controller_Base
     public function init()
     {
         parent::init();
+
+        if(!$this->isAdmin())
+            $this->redirect('index');
+
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
